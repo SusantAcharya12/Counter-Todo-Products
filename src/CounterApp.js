@@ -8,7 +8,10 @@ function counterIncrement(){
 }
 
 function counterDecrement(){
+  if(counter > 0){
+
     setCounter(counter - 1)
+  }
 }
   return (
 

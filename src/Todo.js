@@ -5,22 +5,33 @@ function Todo() {
     const [text, setText] = useState('');
     const [todo,setTodo] = useState([]);
     const [completed,setCompleted] = useState([]);
+    const [editMode, setEditMode] = useState(null);
+    const [editText, setEditText] = useState('');
     
-    console.log(todo,completed)
 
 
     function handleText(e){
         setText(e.target.value)
-        console.log(text)
 
     }
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(todo);
+
+        if (editMode !== null) {
+          const newTodo = [...todo];
+          newTodo[editMode] = editText;
+          setTodo(newTodo);
+          setEditMode(null);
+          console.log(editMode)
+      } 
+
+      else{
         setTodo([...todo,text]);
         setCompleted([...completed,false])
         setText("");
+      }
+       
        
     }
 
@@ -40,6 +51,13 @@ function Todo() {
         setCompleted(newCompleted)
     }
 
+    function toggleEditMode(index) {
+      setEditMode(editMode === index ? null : index);
+      setEditText(todo[index]);
+  }
+
+
+
  
 
   return (
@@ -51,13 +69,32 @@ function Todo() {
         </form>
 
            <div className='main-todo'>
+
+
            {todo.map((e,i)=>{
                 return(
                 <div key={i} className='todo--item' style={{textDecoration: completed[i] ? 'line-through': 'none' }}>
-                    <li key={i}>{e}</li>
+
+                    {editMode===i ? (
+                       <input
+                       type='text'
+                       value={editText}
+                       onChange={(e) => setEditText(e.target.value)}
+                       onBlur={() => toggleEditMode(i)}
+                       autoFocus
+                   />
+                    ):( <li key={i}>{e}</li>
+                    )}
+
+                  
+                   
+          
                     <div className='buttonGroupTodo'>
                     <button className='btn-delete' onClick={()=>deleteTodo(i)}>Delete</button>
                     <button className='btn-completed' onClick={()=>toggleCompleted(i)}>Completed</button>
+                    <button className='btn-edit' onClick={() => toggleEditMode(i)}>
+                                    {editMode === i ? 'Save' : 'Edit'}
+                                </button>
                     </div>
                 </div>
             )})}
@@ -67,5 +104,6 @@ function Todo() {
     </div>
   )
 }
+
 
 export default Todo

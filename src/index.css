@@ -309,59 +309,49 @@ input[type=submit]:hover{
 }
 
 .container{
-  max-width: 1270px;
+  max-width: 900px;
   margin:0 auto;
+  background-color: black;
 }
 
-.grid-product{
+.grid-parent{
   display: grid;
-  grid-template-columns: 800px 470px;
-  column-gap: 40px;
-
+  grid-template-columns: 2fr 1fr;
 }
 
-.parent-grid-image{
+.image-wrapper{
+  /* background-color: green; */
+  min-height: 504px;
+  grid-row: 1/3;
+}
+
+.image-wrapper img{
+  width: 100%;
+  height: 506px;
+  object-fit: center;
+}
+
+.grid-content{
   display: flex;
+  gap: 30px;
   flex-direction: column;
-  gap: 40px;
+  padding: 20px 20px;
+  color: white;
+  
 }
 
-.child-grid-image{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  overflow: hidden;
-  column-gap: 40px;
+.grid-content span{
+  color: #00FFFF;
 }
 
-.child-grid-image{
-
+.Rating{
+  font-weight: 600;
+  font-size: 16px;
 }
 
-.child-grid-image img{
-  max-height: 400px;
-}
 
-.child-grid-image-2{
-  width: 100%;
-  align-self: center;
-}
 
-.single-child-img{
-  grid-column: 1/3;
-  width: 100%;
-}
 
-.product-content{
-  background-color: rgb(180, 177, 177);
-  padding: 20px 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-self: start;
 
-}
 
-.product-content img{
-  width: 100%;
-}
 

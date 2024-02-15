@@ -31,34 +31,22 @@ function Product() {
           <div className="Top-product" key={item.id}>
             <div className="container">
 
-            <div className="grid-product">
-
-              <div className="parent-grid-image">
-                <div className="child-grid-image">
-                  <img src={item.images[0]}/>
-                  <img className="child-grid-image-2" src={item.images[1]}/>
-
-                </div>
-
-                <div className="single-child-grid">
-                <img className="single-child-img" src={item.images[2]}/>
-
-                </div>
-
+            <div className="grid-parent">
+              <div className="image-wrapper">
+                <img src={item.images[0]}/>
               </div>
 
-              <div className="product-content">
-                <img src={item.images[1]}/>
-                <h1>{item.brand}</h1>
-                <h2>{item.category}</h2>
-                <p> {item.description}</p>
-                <h4>Price: ${item.price}</h4>
-                <p>Rating:<strong>{item.rating}</strong></p>
-
+              <div className="grid-content">
+                <h1> <span>Brand:</span> {item.brand}</h1>
+                <h2><span>Category:</span> {item.category}</h2>
+                <h2> <span>Price:</span> {item.price}</h2>
+                <h4><span>Title:</span> {item.title}</h4>
+                <p className="Rating"><span>Rating:</span> {item.rating}</p>
+                <p>{item.description}</p>
 
               </div>
+              </div>
 
-            </div>
 
             </div>
           </div>
