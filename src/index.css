@@ -17,7 +17,10 @@
 header{
   height: 16vh;
   width: 100vw;
-  background-color: black;
+  background-color: var(--backgroundColor);
+  transition: 0.3s ease ;
+  border-top: 2px solid #0034f0;
+  border-bottom: 2px solid #0034f0;
 }
 
 nav{
@@ -230,6 +233,17 @@ input[type=submit]:hover{
   background-color: #ffcc33;
 }
 
+.btn-edit{
+
+  border: none;
+  padding: 8px 14px;
+  border-radius: 7px;
+  background-color: #ca1d88;
+  transition: 0.3s ease;
+  cursor: pointer;
+  color: white;
+
+}
 
 
 
@@ -244,13 +258,12 @@ input[type=submit]:hover{
   max-width: 1270px;
   margin: 80px auto;
   padding: 0 40px;
-  background-color: black;
+  background-color: var(--maingridBg);
 }
 
 .MainGrid > h1{
   text-align: center;
   padding-bottom: 40px;
-  color: white;
   padding-top: 30px;
 
 }
@@ -271,6 +284,7 @@ input[type=submit]:hover{
   border-radius: 7px;
   transition: 0.4s ease-in-out;
   cursor: pointer;
+  box-shadow: var(--product-boxshadow);
 }
 
 .grid-item:hover{
@@ -297,6 +311,8 @@ input[type=submit]:hover{
 .grid-item p {
   font-size: 16px;
 }
+
+
 
 /*  */
 

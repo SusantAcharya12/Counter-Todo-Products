@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { MyContext } from "./MyContext";
 
 
 
 function Product() {
     const [data,setData] = useState([]);
-    console.log(data)
+
 
 
     const {id}= useParams();

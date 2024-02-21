@@ -1,109 +1,109 @@
+import React, { useContext, useState } from "react";
+import { MyContext } from "./MyContext";
 
-import {React, useState} from 'react'
+
 
 function Todo() {
-    const [text, setText] = useState('');
-    const [todo,setTodo] = useState([]);
-    const [completed,setCompleted] = useState([]);
-    const [editMode, setEditMode] = useState(null);
-    const [editText, setEditText] = useState('');
-    
+
+const {text,setText} = useContext(MyContext);
+const {todos,setTodos} = useContext(MyContext);
+const {completed,setCompleted} = useContext(MyContext);
+const {isEditMode,setIsEditMode} = useContext(MyContext);
+const {currentSelectedIndex,setCurrentSelectedIndex} = useContext(MyContext);
 
 
-    function handleText(e){
-        setText(e.target.value)
+	function handleText(e) {
+		setText(e.target.value);
+	}
 
+	function handleSubmit(e) {
+		e.preventDefault();
+    if(!isEditMode){
+      setTodos([ text,...todos ]);
+      setCompleted([false, ...completed ]);
+      setText('');
+      return
     }
 
-    function handleSubmit(e){
-        e.preventDefault();
-
-        if (editMode !== null) {
-          const newTodo = [...todo];
-          newTodo[editMode] = editText;
-          setTodo(newTodo);
-          setEditMode(null);
-          console.log(editMode)
-      } 
-
-      else{
-        setTodo([...todo,text]);
-        setCompleted([...completed,false])
-        setText("");
+    const newTodos = todos.map((todo,index) => {
+      if(index === currentSelectedIndex){
+        todo = text 
       }
-       
-       
-    }
+      return todo 
+    })
 
-    function deleteTodo(index){
+    setTodos(newTodos)
+    setIsEditMode(false)
+    setText('')
 
-      const newTodo =   todo.filter((Element,i,arr)=> index !== i )
+    
+	}
 
-      const newCompleted = completed.filter((_,i)=> i !==index)
-      setCompleted(newCompleted)
-      
-      setTodo(newTodo)
+	function deleteTodo(index) {
+		const newTodos = todos.filter((Element, i, arr) => index !== i);
 
-    }
+		const newCompleted = completed.filter((_, i) => i !== index);
+		setCompleted(newCompleted);
 
-    function toggleCompleted(index){
-        const newCompleted = completed.map((value,i) => i===index ? !value : value)
-        setCompleted(newCompleted)
-    }
+		setTodos(newTodos);
+	}
 
-    function toggleEditMode(index) {
-      setEditMode(editMode === index ? null : index);
-      setEditText(todo[index]);
+	function toggleCompleted(index) {
+		const newCompleted = completed.map((value, i) => (i === index ? !value : value));
+		setCompleted(newCompleted);
+	}
+
+
+  const toggleEditMode = (todo,i) => {
+    setIsEditMode(true)
+    setText(todo)
+    setCurrentSelectedIndex(i)
   }
 
 
+	return (
+		<div className="topTodo">
+			<h1>Todo Application</h1>
+			<form onSubmit={(e) => handleSubmit(e)}>
+				<input
+					className="todo-input"
+					type="text"
+					placeholder="Enter your Todo"
+					value={text}
+					onChange={(e) => handleText(e)}
+				/>
+				<input type="submit" value={isEditMode ? 'Save' : 'Submit'}/>
+			</form>
 
- 
+    {
+      !isEditMode && 
+			<div className="main-todo">
+				{todos.map((todo, i) => {
+					return (
+						<div
+							key={i}
+							className="todo--item"
+							style={{ textDecoration: completed[i] ? 'line-through' : 'none' }}
+              >
+              <li key={i}>{todo}</li>
+							
 
-  return (
-    <div className='topTodo'>
-      <h1>Todo Application</h1>
-        <form onSubmit={(e)=>handleSubmit(e)}>
-        <input className='todo-input' type='text' placeholder='Enter your Todo' value={text} onChange={(e)=>handleText(e)}/>
-        <input type='submit'/> 
-        </form>
-
-           <div className='main-todo'>
-
-
-           {todo.map((e,i)=>{
-                return(
-                <div key={i} className='todo--item' style={{textDecoration: completed[i] ? 'line-through': 'none' }}>
-
-                    {editMode===i ? (
-                       <input
-                       type='text'
-                       value={editText}
-                       onChange={(e) => setEditText(e.target.value)}
-                       onBlur={() => toggleEditMode(i)}
-                       autoFocus
-                   />
-                    ):( <li key={i}>{e}</li>
-                    )}
-
-                  
-                   
-          
-                    <div className='buttonGroupTodo'>
-                    <button className='btn-delete' onClick={()=>deleteTodo(i)}>Delete</button>
-                    <button className='btn-completed' onClick={()=>toggleCompleted(i)}>Completed</button>
-                    <button className='btn-edit' onClick={() => toggleEditMode(i)}>
-                                    {editMode === i ? 'Save' : 'Edit'}
-                                </button>
-                    </div>
-                </div>
-            )})}
-
-           </div>
-
-    </div>
-  )
+							<div className="buttonGroupTodo">
+								<button className="btn-delete" onClick={() => deleteTodo(i)}>
+									Delete
+								</button>
+								<button className="btn-completed" onClick={() => toggleCompleted(i)}>
+									Completed
+								</button>
+                <button className='btn-edit' onClick={() => toggleEditMode(todo,i)}>Edit</button>
+							</div>
+						</div>
+					);
+				})}
+			</div>
+    }
+		</div>
+	);
 }
 
-
-export default Todo
+export default Todo;
